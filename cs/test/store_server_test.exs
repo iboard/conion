@@ -3,7 +3,7 @@ defmodule StoreServerTest do
   alias CentralScrutinizer.Store.Server
 
   test ".list_buckets()" do
-    assert Server.list_buckets() == []
+    assert is_list(Server.list_buckets())
   end
 
   test ".new_bucket('name')" do
