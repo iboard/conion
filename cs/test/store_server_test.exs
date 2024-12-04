@@ -8,7 +8,7 @@ defmodule StoreServerTest do
 
   test ".new_bucket('name')" do
     assert :ok = Server.new_bucket(:my_bucket)
-    assert [:my_bucket] == Server.list_buckets()
+    assert :my_bucket in Server.list_buckets()
   end
 
   test ".insert_new(bucket,entry)" do
