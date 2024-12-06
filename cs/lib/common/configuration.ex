@@ -34,7 +34,7 @@ defmodule Cea.Common.Configuration do
   """
   def load_configuration_for({{_env, _app, _key, _default} = conf_key, set_function}, config) do
     loaded = load(conf_key) |> Logger.log(:debug, "Configuration loaded")
-    set = loaded |> set_function.()
+    set = set_function.(loaded)
     Map.put(config, conf_key, {loaded, set})
   end
 

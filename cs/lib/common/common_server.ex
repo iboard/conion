@@ -38,8 +38,8 @@ defmodule CentralScrutinizer.CommonServer do
       end
 
       @doc "Returns the state of a server. You can pass an atom or pid."
-      def get_state(server) when is_pid(server), do: :sys.get_state(server)
-      def get_state(server) when is_atom(server), do: :sys.get_state(server)
+      def get_state(pid_or_atom) when is_pid(pid_or_atom) or is_atom(pid_or_atom),
+        do: :sys.get_state(pid_or_atom)
 
       # GenServer Callbacks
 
