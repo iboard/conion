@@ -17,7 +17,6 @@ config :logger,
 
 config :cs,
   application_children: [
-    # {CentralScrutinizer.Gateway.Server, name: CentralScrutinizer.Gateway.Server},
     {CentralScrutinizer.Store.Server, name: CentralScrutinizer.Store.Server},
     {CentralScrutinizer.Store.BucketSupervisor, name: CentralScrutinizer.Store.BucketSupervisor}
   ]
