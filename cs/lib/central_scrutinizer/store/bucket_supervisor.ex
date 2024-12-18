@@ -16,9 +16,7 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   """
   def list_buckets() do
     DynamicSupervisor.which_children(__MODULE__)
-    |> Enum.map(fn {_, pid, :worker, [CentralScrutinizer.Store.Bucket]} ->
-      Bucket.bucket_name(pid) 
-    end)
+    |> Enum.map(&get_bucket_name/1)
   end
 
   @doc """
@@ -26,21 +24,35 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   Returns {:ok, pid}
   """
   def start_child(args) do
-    name=args[:initial_state][:bucket_name]
+    name = args[:initial_state][:bucket_name]
 
-    case DynamicSupervisor.start_child(
-           __MODULE__,
-           {CentralScrutinizer.Store.Bucket, name: :"bucket_#{name}", bucket_name: name}
-         ) do
-      {:ok, pid} when is_pid(pid) -> {:ok, pid}
-      {:error, {:already_started, pid}} when is_pid(pid) -> 
-        {:ok, pid}
-    end
+    DynamicSupervisor.start_child(
+      __MODULE__,
+      {Bucket, name: :"bucket_#{name}", bucket_name: name}
+    )
+    |> handle_start_child()
   end
+
+  # DynamicSupervisor Callbacks
 
   @impl true
   def init(_init_arg) do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
+  # private implementation
+
+  defp handle_start_child(result) do
+    case result do
+      {:ok, pid} when is_pid(pid) ->
+        {:ok, pid}
+
+      {:error, {:already_started, pid}} when is_pid(pid) ->
+        {:ok, pid}
+    end
+  end
+
+  defp get_bucket_name({_, pid, :worker, [Bucket]}) do
+    Bucket.bucket_name(pid)
+  end
 end

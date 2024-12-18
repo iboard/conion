@@ -3,15 +3,15 @@ defmodule CentralScrutinizer.Application do
 
   use Application
   alias CentralScrutinizer, as: CS
-  alias Cea.Common.Logger
+  alias Cea.Common.CentralLogger
 
   @impl true
   def start(type, args) do
-    Logger.log({type, args}, :notice, "Starting Application #{__MODULE__} ...")
+    CentralLogger.log({type, args}, :notice, "Starting Application #{__MODULE__} ...")
     CS.configure()
 
     CS.application_children()
     |> Supervisor.start_link(strategy: :one_for_one, name: CentralScrutinizer.Supervisor)
-    |> Logger.log(:notice, "Starting Application #{__MODULE__} ... started.")
+    |> CentralLogger.log(:notice, "Starting Application #{__MODULE__} ... started.")
   end
 end

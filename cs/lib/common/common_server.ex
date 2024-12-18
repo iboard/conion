@@ -10,7 +10,7 @@ defmodule CentralScrutinizer.CommonServer do
   defmacro __using__(_opts \\ []) do
     quote do
       use GenServer
-      alias Cea.Common.Logger
+      alias Cea.Common.CentralLogger
 
       @doc """
       Start the server with either
@@ -27,14 +27,14 @@ defmodule CentralScrutinizer.CommonServer do
           prepare_state_to_start(opts),
           Keyword.take(opts, [:name])
         )
-        |> Logger.log(:notice, "#{__MODULE__} started with opts: #{inspect(opts)}")
+        |> CentralLogger.log(:notice, "#{__MODULE__} started with opts: #{inspect(opts)}")
       end
 
       def start_link(state) do
         state = state |> prepare_state_to_start()
 
         GenServer.start_link(__MODULE__, state, [])
-        |> Logger.log(:notice, "#{__MODULE__} started unnamed")
+        |> CentralLogger.log(:notice, "#{__MODULE__} started unnamed")
       end
 
       @doc "Returns the state of a server. You can pass an atom or pid."
@@ -46,7 +46,7 @@ defmodule CentralScrutinizer.CommonServer do
       @impl true
       def init(initial_state) do
         {:ok, initial_state(initial_state)}
-        |> Logger.log(:debug, "#{__MODULE__} initialized")
+        |> CentralLogger.log(:debug, "#{__MODULE__} initialized")
       end
 
       @doc """
