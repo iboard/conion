@@ -41,7 +41,7 @@ defmodule StoreServerTest do
   test ".get(non_existing_bucket, id)" do
     :ok = Server.new_bucket(:my_bucket)
     {:ok, {id, _entry}} = Server.insert_new(:my_bucket, %{some: :thing})
-    {:error, {:bucket_not_exist, nil}} = Server.get(:nix_bucket, id)
+    {:error, {:not_alive, nil}} = Server.get(:nix_bucket, id)
   end
 
   test ".get(bucket,non_existing_id)" do

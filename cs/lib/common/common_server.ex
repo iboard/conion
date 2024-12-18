@@ -67,6 +67,28 @@ defmodule CentralScrutinizer.CommonServer do
 
       defoverridable prepare_state_to_start: 1
       defoverridable initial_state: 1
+
+      # safely call the GenServer.callback return error if bucket not alive
+
+      defp call(pid_or_name, message)
+
+      defp call(pid, message) when is_pid(pid) do
+        Process.alive?(pid)
+        |> call_or_error(pid, message)
+      end
+
+      defp call(name, message) when is_atom(name) do
+        pid = GenServer.whereis(name)
+        call_or_error(!is_nil(pid), pid, message)
+      end
+
+      defp call_or_error(true, name_or_pid, message) do
+        GenServer.call(name_or_pid, message)
+      end
+
+      defp call_or_error(false, name_or_pid, _message) do
+        {:error, {:not_alive, name_or_pid}}
+      end
     end
   end
 end
