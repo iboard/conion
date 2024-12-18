@@ -1,0 +1,18 @@
+erlang 27.2
+elixir 1.18.0-otp-27
+neovim 0.10.2
+
+#erlang 27.0
+#elixir 1.17.2-otp-27
+#neovim 0.10.1
+
+#erlang 26.2.1
+#elixir 1.16.1-otp-26
+#erlang 26.0.2
+#elixir 1.15.4-otp-26
+
+#neovim 0.9.2
+#neovim 0.9.5
+nodejs 20.2.0
+rust 1.65.0
+ruby 3.1.1
