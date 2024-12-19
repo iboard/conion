@@ -2,8 +2,10 @@ defmodule CentralScrutinizer do
   @moduledoc """
   Documentation for `CentralScrutinizer`'s main API.
   """
+  use Cea.Common.CentralLogger
+
   alias CentralScrutinizer, as: CS
-  alias Cea.Common.{Configuration, CentralLogger}
+  alias Cea.Common.{Configuration}
 
   # General Configuration
 
@@ -47,8 +49,8 @@ defmodule CentralScrutinizer do
   defp is_up?({module, _opts}) do
     not is_nil(GenServer.whereis(module))
     |> tap(fn
-      false -> CentralLogger.log(module, :warning, "module is not alive.")
-      true -> CentralLogger.log(module, :debug, "module is alive.")
+      false -> log(module, :warning, "module is not alive.")
+      true -> log(module, :debug, "module is alive.")
     end)
   end
 end

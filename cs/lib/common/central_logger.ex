@@ -6,7 +6,16 @@ defmodule Cea.Common.CentralLogger do
   #{__MODULE__}.log/1 to do logging. This ensures all
   log messages are formatted the same and are easy to 
   read and configure in a single place.
+
+  You can also `use CentralLogger` to import the `log/3`
+  function into your module.
   """
+
+  defmacro __using__(_) do
+    quote do
+      import Cea.Common.CentralLogger, only: [log: 3, configure: 1]
+    end
+  end
 
   @doc """
   The `element` is passed through the function, so you can

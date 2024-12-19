@@ -1,8 +1,6 @@
 defmodule CentralScrutinizer.CommonServer do
   @moduledoc """
   `use CommonServer` defines some boilerplate functions for a GenServer.
-
-
   """
   @callback prepare_start(arg :: any()) :: any()
   @callback initial_state(arg :: any()) :: any()
@@ -10,7 +8,7 @@ defmodule CentralScrutinizer.CommonServer do
   defmacro __using__(_opts \\ []) do
     quote do
       use GenServer
-      alias Cea.Common.CentralLogger
+      use Cea.Common.CentralLogger
 
       @doc """
       Start the server with either
@@ -27,14 +25,14 @@ defmodule CentralScrutinizer.CommonServer do
           prepare_state_to_start(opts),
           Keyword.take(opts, [:name])
         )
-        |> CentralLogger.log(:notice, "#{__MODULE__} started with opts: #{inspect(opts)}")
+        |> log(:notice, "#{__MODULE__} started with opts: #{inspect(opts)}")
       end
 
       def start_link(state) do
         state = state |> prepare_state_to_start()
 
         GenServer.start_link(__MODULE__, state, [])
-        |> CentralLogger.log(:notice, "#{__MODULE__} started unnamed")
+        |> log(:notice, "#{__MODULE__} started unnamed")
       end
 
       @doc "Returns the state of a server. You can pass an atom or pid."
@@ -46,7 +44,7 @@ defmodule CentralScrutinizer.CommonServer do
       @impl true
       def init(initial_state) do
         {:ok, initial_state(initial_state)}
-        |> CentralLogger.log(:debug, "#{__MODULE__} initialized")
+        |> log(:debug, "#{__MODULE__} initialized")
       end
 
       @doc """
