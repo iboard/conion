@@ -1,5 +1,10 @@
 defmodule CentralScrutinizer.Application do
-  @moduledoc false
+  @moduledoc """
+  Configures the application and starts the supervision tree.
+
+  Which supervised children to start is configured in the `config.exs` file
+  and pulled in from `CentralScrutinizer.application_children/0`.
+  """
 
   use Application
   use Cea.Common.CentralLogger

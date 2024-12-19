@@ -25,12 +25,10 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   """
   def start_child(args) do
     name = args[:initial_state][:bucket_name]
+    opts = {Bucket, name: :"bucket_#{name}", bucket_name: name}
 
-    DynamicSupervisor.start_child(
-      __MODULE__,
-      {Bucket, name: :"bucket_#{name}", bucket_name: name}
-    )
-    |> handle_start_child()
+    DynamicSupervisor.start_child(__MODULE__, opts)
+    |> respond_tuple()
   end
 
   # DynamicSupervisor Callbacks
@@ -42,7 +40,7 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
 
   # private implementation
 
-  defp handle_start_child(result) do
+  defp respond_tuple(result) do
     case result do
       {:ok, pid} when is_pid(pid) ->
         {:ok, pid}

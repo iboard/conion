@@ -17,29 +17,44 @@ defmodule CentralScrutinizer.Store.Bucket do
   ## Bucket API
   ######################################################################
 
-  @doc "Return the bucket name of the bucket at `pid`"
+  @doc ~s"""
+  Return the bucket name of the bucket at `pid`
+  """
   def bucket_name(pid), do: call(pid, :bucket_name)
 
-  @doc "Return the entry at id from the bucket"
+  @doc ~s"""
+  Return the entry at id from the bucket
+  """
   def get(bucket, id), do: call(process_name(bucket), {:get, id})
 
-  @doc "Return all entry from the bucket"
+  @doc ~s"""
+  Return all entry from the bucket
+  """
   def list(bucket), do: call(process_name(bucket), :list)
 
-  @doc "removes all entries from the bucket"
+  @doc ~s"""
+  removes all entries from the bucket
+  """
   def drop!(pid), do: call(pid, :drop!)
 
-  @doc "{:ok, {new_id,etry}}, {:error, :bucket_not_exist}"
+  @doc ~s"""
+  `{:ok, {new_id,etry}}, {:error, :bucket_not_exist}`
+  """
   def insert(bucket, entry), do: call(process_name(bucket), {:insert, entry})
 
-  @doc "{:ok, {id,etry}}, {:error, :bucket_not_exist | :id_not_found}"
+  @doc ~s"""
+  `{:ok, {id,etry}}, {:error, :bucket_not_exist | :id_not_found}`
+  """
   def replace(bucket, id, entry), do: call(process_name(bucket), {:replace, id, entry})
 
-  @doc "{:ok, {id,etry}}, {:error, :bucket_not_exist | :id_not_found}"
+  @doc ~s"""
+  `{:ok, {id,etry}}, {:error, :bucket_not_exist | :id_not_found}`
+  """
   def remove(bucket, id), do: call(process_name(bucket), {:remove, id})
 
   ## GenServer Callbacks Implementation
   ######################################################################
+
   @impl true
   def handle_call(:drop!, _, %{bucket: _bucket} = state),
     do: {:reply, :ok, %{state | bucket: %{}}}

@@ -28,6 +28,8 @@ defmodule CentralScrutinizer.Store.Server do
     GenServer.call(__MODULE__, {:new_bucket, name})
   end
 
+  ### Entry functions
+
   @doc "Insert a new entry into an existing bucket"
   def insert_new(bucket, entry) when is_atom(bucket), do: Bucket.insert(bucket, entry)
 
