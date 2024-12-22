@@ -1,4 +1,0 @@
-# CentralScrutinizer
-
-
-TBD: Documentation
