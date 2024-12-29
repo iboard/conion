@@ -60,6 +60,21 @@ defmodule StoreServerTest do
     assert reloaded_entry[:some] == "updated thing"
   end
 
+  test ".update(non_existing_bucket,_) returns error" do
+    entry = %{some: "thing"}
+
+    {:error, {:not_alive, _}} =
+      Server.replace(:nix_bucket, "doesnt_matter", %{entry | some: "updated thing"})
+  end
+
+  test ".update(bucket,non_existing_key, \"doesnt matter\") returns error" do
+    :ok = Server.new_bucket(:my_bucket)
+    {:ok, {_id, entry}} = Server.insert_new(:my_bucket, %{some: :thing})
+
+    :error =
+      Server.replace(:my_bucket, "non_existing_id", %{entry | some: "updated thing"})
+  end
+
   test ".delete(bucket,id)" do
     :ok = Server.new_bucket(:my_bucket)
     {:ok, {id1, entry1}} = Server.insert_new(:my_bucket, %{some: :one})
