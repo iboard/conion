@@ -64,15 +64,14 @@ defmodule StoreServerTest do
     entry = %{some: "thing"}
 
     {:error, {:not_alive, _}} =
-      Server.replace(:nix_bucket, "doesnt_matter", %{entry | some: "updated thing"})
+      Server.replace(:not_existing_bucket, "doesnt_matter", %{entry | some: "updated thing"})
   end
 
   test ".update(bucket,non_existing_key, \"doesnt matter\") returns error" do
-    :ok = Server.new_bucket(:my_bucket)
-    {:ok, {_id, entry}} = Server.insert_new(:my_bucket, %{some: :thing})
+    :ok = Server.new_bucket(:some_new_bucket)
 
-    :error =
-      Server.replace(:my_bucket, "non_existing_id", %{entry | some: "updated thing"})
+    assert :error ==
+             Server.replace(:some_new_bucket, "non_existing_id", %{some: "updated thing"})
   end
 
   test ".delete(bucket,id)" do

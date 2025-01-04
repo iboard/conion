@@ -54,7 +54,11 @@ defmodule CentralScrutinizer.Store.Server do
 
   @impl true
   def handle_call(:list_buckets, _, :ok) do
-    {:reply, BucketSupervisor.list_buckets(), :ok}
+    try do
+      {:reply, BucketSupervisor.list_buckets(), :ok}
+    catch
+      _ -> {:reply, [], :ok}
+    end
   end
 
   def handle_call({:new_bucket, name}, _, :ok) do

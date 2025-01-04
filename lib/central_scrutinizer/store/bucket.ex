@@ -62,6 +62,9 @@ defmodule CentralScrutinizer.Store.Bucket do
   def handle_call(:bucket_name, _, %{bucket_name: name} = state),
     do: {:reply, name, state}
 
+  def handle_call(:bucket_name, _, unsupported = state),
+    do: {:reply, {:bucket_doesnt_exist, unsupported}, state}
+
   def handle_call({:get, id}, _, %{bucket: bucket} = state),
     do: {:reply, entry_or_error(bucket, id), state}
 

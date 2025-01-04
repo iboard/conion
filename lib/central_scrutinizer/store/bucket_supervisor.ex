@@ -4,6 +4,7 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   """
 
   use DynamicSupervisor
+  use Cea.Common.CentralLogger
   alias CentralScrutinizer.Store.Bucket
 
   @doc "Started from `CentralScrutinizer.Application`"
@@ -15,8 +16,12 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   Returns a list of bucket-names of all Buckets alive.
   """
   def list_buckets() do
-    DynamicSupervisor.which_children(__MODULE__)
-    |> Enum.map(&get_bucket_name/1)
+    try do
+      DynamicSupervisor.which_children(__MODULE__)
+      |> Enum.map(&get_bucket_name/1)
+    rescue
+      _ -> []
+    end
   end
 
   @doc """
@@ -52,5 +57,10 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
 
   defp get_bucket_name({_, pid, :worker, [Bucket]}) do
     Bucket.bucket_name(pid)
+  end
+
+  defp get_bucket_name(unknown) do
+    log(unknown, :error, "unsuported!")
+    "unknown"
   end
 end
