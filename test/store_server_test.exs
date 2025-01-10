@@ -84,6 +84,7 @@ defmodule StoreServerTest do
     assert {:error, {:id_not_found, ^id1}} = Server.get(:my_bucket, id1)
   end
 
+  @tag :slow
   test "insert 10_000 entries in less than   110ms" do
     :ok = Server.new_bucket(:my_bucket)
 
