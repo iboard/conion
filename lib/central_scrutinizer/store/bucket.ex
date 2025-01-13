@@ -11,7 +11,8 @@ defmodule CentralScrutinizer.Store.Bucket do
   use CentralScrutinizer.CommonServer
 
   def prepare_state_to_start(args) do
-    %{bucket_name: args[:bucket_name], bucket: %{}}
+    dbg(args)
+    %{bucket_name: args[:bucket_name], bucket: %{}, dirty?: false, persistor: nil}
   end
 
   ## Bucket API
@@ -31,6 +32,16 @@ defmodule CentralScrutinizer.Store.Bucket do
   Return all entry from the bucket
   """
   def list(bucket), do: call(process_name(bucket), :list)
+
+  @doc ~s"""
+  Retrun true if the bucket is not stored permanently 
+  """
+  def dirty?(bucket), do: call(process_name(bucket), :dirty?)
+
+  @doc ~s"""
+  Persist a bucket
+  """
+  def persist(bucket), do: cast(process_name(bucket), :persist)
 
   @doc ~s"""
   removes all entries from the bucket
@@ -73,7 +84,7 @@ defmodule CentralScrutinizer.Store.Bucket do
 
   def handle_call({:insert, entry}, _, %{bucket: bucket} = state) do
     with_unique_id(fn id ->
-      {:reply, {:ok, {id, entry}}, %{state | bucket: Map.put(bucket, id, entry)}}
+      {:reply, {:ok, {id, entry}}, %{state | dirty?: true, bucket: Map.put(bucket, id, entry)}}
     end)
   end
 
@@ -86,6 +97,17 @@ defmodule CentralScrutinizer.Store.Bucket do
     {reply, new_state} = remove_or_error(state, bucket, id)
     {:reply, reply, new_state}
   end
+
+  def handle_call(:dirty?, _, %{dirty?: true} = state), do: {:reply, true, state}
+
+  def handle_call(:dirty?, _, %{dirty?: false} = state), do: {:reply, false, state}
+
+  @impl true
+  def handle_cast(:persist, %{dirty?: true} = state) do
+    {:noreply, %{state | dirty?: false}}
+  end
+
+  def handle_cast(:persist, %{dirty?: false} = state), do: {:noreply, state}
 
   # private implementation details
   ###########################################################################

@@ -87,6 +87,26 @@ defmodule CentralScrutinizer.CommonServer do
       defp call_or_error(false, name_or_pid, _message) do
         {:error, {:not_alive, name_or_pid}}
       end
+
+      defp cast(pid_or_name, message)
+
+      defp cast(name, message) when is_atom(name) do
+        pid = GenServer.whereis(name)
+        cast_or_error(!is_nil(pid), pid, message)
+      end
+
+      defp cast(pid, message) when is_pid(pid) do
+        Process.alive?(pid)
+        |> cast_or_error(pid, message)
+      end
+
+      defp cast_or_error(true, name_or_pid, message) do
+        GenServer.cast(name_or_pid, message)
+      end
+
+      defp cast_or_error(false, name_or_pid, _message) do
+        {:error, {:not_alive, name_or_pid}}
+      end
     end
   end
 end

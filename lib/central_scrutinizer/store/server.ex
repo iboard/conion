@@ -13,7 +13,10 @@ defmodule CentralScrutinizer.Store.Server do
   use CentralScrutinizer.CommonServer
 
   @doc "Start with an empty map (dictionary)"
-  def initial_state(_), do: :ok
+  def initial_state(args) do
+    dbg(args)
+    :ok
+  end
 
   ## Server API
   ######################################################################
@@ -26,6 +29,11 @@ defmodule CentralScrutinizer.Store.Server do
   @doc "Create or load a new bucket"
   def new_bucket(name) when is_atom(name) do
     GenServer.call(__MODULE__, {:new_bucket, name})
+  end
+
+  @doc "Create or load a new bucket with a persistor"
+  def new_bucket(name, persistor, args) do
+    GenServer.call(__MODULE__, {:new_bucket, name, persistor, args})
   end
 
   ### Entry functions
@@ -49,6 +57,12 @@ defmodule CentralScrutinizer.Store.Server do
   @doc "remove entry with the given id"
   def remove(bucket, id) when is_atom(bucket), do: Bucket.remove(bucket, id)
 
+  @doc "returns true if the given bucket is not saved permanently"
+  def dirty?(bucket), do: Bucket.dirty?(bucket)
+
+  @doc "persist the bucket"
+  def persist(bucket), do: Bucket.persist(bucket)
+
   # GenServer Callbacks
   ######################################################################
 
@@ -65,5 +79,15 @@ defmodule CentralScrutinizer.Store.Server do
     {:ok, pid} = BucketSupervisor.start_child(initial_state: %{bucket_name: name})
     Bucket.drop!(pid)
     {:reply, :ok, :ok}
+  end
+
+  def handle_call({:new_bucket, name, persistor, args}, _, state) do
+    {:ok, pid} =
+      BucketSupervisor.start_child(
+        initial_state: %{bucket_name: name, persistor: persistor, args: args}
+      )
+
+    Bucket.drop!(pid)
+    {:reply, :ok, state}
   end
 end
