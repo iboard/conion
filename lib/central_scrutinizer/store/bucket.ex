@@ -11,8 +11,12 @@ defmodule CentralScrutinizer.Store.Bucket do
   use CentralScrutinizer.CommonServer
 
   def prepare_state_to_start(args) do
-    dbg(args)
-    %{bucket_name: args[:bucket_name], bucket: %{}, dirty?: false, persistor: nil}
+    %{
+      bucket_name: args[:bucket_name],
+      bucket: %{},
+      dirty?: false,
+      persistor: {args[:persistor], filename: args[:filename]}
+    }
   end
 
   ## Bucket API
@@ -22,6 +26,11 @@ defmodule CentralScrutinizer.Store.Bucket do
   Return the bucket name of the bucket at `pid`
   """
   def bucket_name(pid), do: call(pid, :bucket_name)
+
+  @doc ~s"""
+  return the bucket's persistor 
+  """
+  def persistor(pid_or_name), do: call(process_name(pid_or_name), :persistor)
 
   @doc ~s"""
   Return the entry at id from the bucket
@@ -67,6 +76,10 @@ defmodule CentralScrutinizer.Store.Bucket do
   ######################################################################
 
   @impl true
+  def handle_call(:persistor, _, state) do
+    {:reply, state[:persistor], state}
+  end
+
   def handle_call(:drop!, _, %{bucket: _bucket} = state),
     do: {:reply, :ok, %{state | bucket: %{}}}
 

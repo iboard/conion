@@ -30,16 +30,16 @@ defmodule CentralScrutinizer.Store.BucketSupervisor do
   """
   def start_child(args) do
     name = args[:initial_state][:bucket_name]
-    opts = [Bucket, name: :"bucket_#{name}", bucket_name: name]
-    persistor = args[:initial_state][:persistor]
-    persistor_args = (persistor && args[:initial_state][:args]) || []
 
     opts =
-      opts
-      |> Keyword.put(:persistor, persistor)
-      |> Keyword.put(:args, persistor_args)
+      [
+        name: :"bucket_#{name}",
+        bucket_name: name,
+        persistor: args[:initial_state][:persistor],
+        filename: args[:initial_state][:args][:filename]
+      ]
 
-    DynamicSupervisor.start_child(__MODULE__, opts)
+    DynamicSupervisor.start_child(__MODULE__, {Bucket, opts})
     |> respond_tuple()
   end
 

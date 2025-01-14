@@ -7,12 +7,12 @@ defmodule StoreServerTest do
   end
 
   test ".new_bucket('name')" do
-    assert :ok = Server.new_bucket(:my_bucket)
+    assert {:ok, _pid} = Server.new_bucket(:my_bucket)
     assert :my_bucket in Server.list_buckets()
   end
 
   test ".insert_new(bucket,entry)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {id, entry}} = Server.insert_new(:my_bucket, %{some: :thing})
 
     assert not is_nil(id)
@@ -20,7 +20,7 @@ defmodule StoreServerTest do
   end
 
   test ".list(bucket)" do
-    :ok = Server.new_bucket(:some_bucket)
+    {:ok, _pid} = Server.new_bucket(:some_bucket)
     {:ok, {id1, entry1}} = Server.insert_new(:some_bucket, %{name: "1_entry"})
     {:ok, {id2, entry2}} = Server.insert_new(:some_bucket, %{name: "2_entry"})
     {:ok, {id3, entry3}} = Server.insert_new(:some_bucket, %{name: "3_entry"})
@@ -30,7 +30,7 @@ defmodule StoreServerTest do
   end
 
   test ".get(bucket,id)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {id1, entry1}} = Server.insert_new(:my_bucket, %{some: :thing})
     {:ok, {id2, entry2}} = Server.insert_new(:my_bucket, %{some: :other_thing})
 
@@ -39,19 +39,19 @@ defmodule StoreServerTest do
   end
 
   test ".get(non_existing_bucket, id)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {id, _entry}} = Server.insert_new(:my_bucket, %{some: :thing})
     {:error, {:not_alive, nil}} = Server.get(:nix_bucket, id)
   end
 
   test ".get(bucket,non_existing_id)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {_id, _entry}} = Server.insert_new(:my_bucket, %{some: :thing})
     {:error, {:id_not_found, :my_123}} = Server.get(:my_bucket, :my_123)
   end
 
   test ".update(bucket,id,entry)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {id, entry}} = Server.insert_new(:my_bucket, %{some: :thing})
     {:ok, updated_entry} = Server.replace(:my_bucket, id, %{entry | some: "updated thing"})
 
@@ -68,14 +68,14 @@ defmodule StoreServerTest do
   end
 
   test ".update(bucket,non_existing_key, \"doesnt matter\") returns error" do
-    :ok = Server.new_bucket(:some_new_bucket)
+    {:ok, _pid} = Server.new_bucket(:some_new_bucket)
 
     assert :error ==
              Server.replace(:some_new_bucket, "non_existing_id", %{some: "updated thing"})
   end
 
   test ".delete(bucket,id)" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
     {:ok, {id1, entry1}} = Server.insert_new(:my_bucket, %{some: :one})
     {:ok, {_id2, _entry2}} = Server.insert_new(:my_bucket, %{some: :two})
     {:ok, deleted_entry} = Server.remove(:my_bucket, id1)
@@ -86,7 +86,7 @@ defmodule StoreServerTest do
 
   @tag :slow
   test "insert 10_000 entries in less than   110ms" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
 
     s = :os.system_time()
 
@@ -102,7 +102,7 @@ defmodule StoreServerTest do
 
   @tag :slow
   test "insert 100_000 entries in less than 1010ms" do
-    :ok = Server.new_bucket(:my_bucket)
+    {:ok, _pid} = Server.new_bucket(:my_bucket)
 
     s = :os.system_time()
 
