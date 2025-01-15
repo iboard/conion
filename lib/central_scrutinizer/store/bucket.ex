@@ -116,11 +116,11 @@ defmodule CentralScrutinizer.Store.Bucket do
   def handle_call(:dirty?, _, %{dirty?: false} = state), do: {:reply, false, state}
 
   @impl true
-  def handle_cast(:persist, %{dirty?: true} = state) do
-    {:noreply, %{state | dirty?: false}}
+  def handle_cast(:persist, state) do
+    if state.dirty? == true,
+      do: {:noreply, %{state | dirty?: false}},
+      else: {:noreply, state}
   end
-
-  def handle_cast(:persist, %{dirty?: false} = state), do: {:noreply, state}
 
   # private implementation details
   ###########################################################################
