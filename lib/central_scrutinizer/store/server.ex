@@ -12,9 +12,6 @@ defmodule CentralScrutinizer.Store.Server do
   ######################################################################
   use CentralScrutinizer.CommonServer
 
-  @doc "Start with an empty map (dictionary)"
-  def initial_state(args), do: args
-
   ## Server API
   ######################################################################
 
@@ -79,10 +76,14 @@ defmodule CentralScrutinizer.Store.Server do
     end
   end
 
-  def handle_call({:new_bucket, name}, _, state) do
-    {:ok, pid} = BucketSupervisor.start_child(initial_state: %{bucket_name: name})
+  def handle_call({:new_bucket, name}, _, _state) do
+    initial_state = %{bucket_name: name}
+
+    {:ok, pid} =
+      BucketSupervisor.start_child(initial_state: initial_state)
+
     Bucket.drop!(pid)
-    {:reply, {:ok, pid}, state}
+    {:reply, {:ok, pid}, initial_state}
   end
 
   def handle_call({:new_bucket, name, persistor, args}, _, _) do

@@ -19,6 +19,13 @@ defmodule CentralScrutinizer.Store.Bucket do
     }
   end
 
+  def initial_state(%{persistor: {module, opts}} = state) when not is_nil(module) do
+    filename = opts[:filename]
+    %{state | bucket: apply(module, :read!, [filename])}
+  end
+
+  def initial_state(args), do: args
+
   ## Bucket API
   ######################################################################
 
@@ -116,14 +123,22 @@ defmodule CentralScrutinizer.Store.Bucket do
   def handle_call(:dirty?, _, %{dirty?: false} = state), do: {:reply, false, state}
 
   @impl true
-  def handle_cast(:persist, state) do
-    if state.dirty? == true,
-      do: {:noreply, %{state | dirty?: false}},
-      else: {:noreply, state}
-  end
+  def handle_cast(:persist, %{dirty?: true} = state), do: maybe_persist(state)
+  def handle_cast(:persist, %{dirty?: false} = state), do: {:noreply, state}
 
   # private implementation details
   ###########################################################################
+
+  defp maybe_persist(%{dirty?: true, bucket: data, persistor: {module, args}} = state)
+       when not is_nil(module) do
+    :ok = apply(module, :write!, [args[:filename], data])
+
+    {:noreply, %{state | dirty?: false}}
+  end
+
+  defp maybe_persist(%{dirty?: true, persistor: {nil, _args}} = state) do
+    {:noreply, %{state | dirty?: false}}
+  end
 
   # "Return the process name at which this bucket is registered"
   defp process_name(bucket_name), do: :"bucket_#{bucket_name}"
