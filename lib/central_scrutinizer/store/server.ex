@@ -93,7 +93,6 @@ defmodule CentralScrutinizer.Store.Server do
     {:ok, pid} =
       BucketSupervisor.start_child(initial_state: initial_state)
 
-    Bucket.drop!(pid)
     {:reply, {:ok, pid}, initial_state}
   end
 end
