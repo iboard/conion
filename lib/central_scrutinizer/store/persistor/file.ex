@@ -3,6 +3,8 @@ defmodule CentralScrutinizer.Store.Persistor.File do
   Persists and reads data to raw files.
   """
 
+  @behaviour CentralScrutinizer.Store.Persistor
+
   @doc """
   Write data to filename and returns :ok on success.
   Otherwise raises an exception from `File.write!/3`

@@ -1,7 +1,7 @@
 defmodule CentralScrutinizer.Store.Bucket do
   @moduledoc """
   A Bucket is a key/value store in a supervised GenServer.
-  Use `CentralScrutinizer.Store.Server.new_bucket/1` to start a bucket.
+  Use `CentralScrutinizer.Store.new_bucket/1` to start a bucket.
   The Server will use `CentralScrutinizer.Store.BucketSupervisor.start_child/1`
   to do so.
   """
