@@ -25,8 +25,8 @@ defmodule Conion.MixProject do
     [
       name: "conion",
       description: description(),
-      files: ~w(lib .formatter.exs mix.exs README* readme* LICENSE*
-                license* CHANGELOG* changelog*),
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE*
+                CHANGELOG*),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/iboard/cea"}
     ]
