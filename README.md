@@ -1,5 +1,6 @@
 # Conion
 
+[![.github/workflows/elixir.yml](https://github.com/iboard/cea/actions/workflows/elixir.yml/badge.svg)](https://github.com/iboard/cea/actions/workflows/elixir.yml)
 
 Conion is a package for general Elixir modules 
 
