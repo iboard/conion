@@ -1,6 +1,6 @@
 defmodule StoreTest do
   use ExUnit.Case
-  alias CentralScrutinizer.Store
+  alias Conion.Store
 
   test ".list_buckets()" do
     assert is_list(Store.list_buckets())

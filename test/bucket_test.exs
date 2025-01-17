@@ -1,7 +1,7 @@
 defmodule BucketTest do
   use ExUnit.Case
-  alias CentralScrutinizer.Store
-  alias CentralScrutinizer.Store.Persistor
+  alias Conion.Store
+  alias Conion.Store.Persistor
 
   describe "without persistor" do
     test "a bucket is dirty when modified" do

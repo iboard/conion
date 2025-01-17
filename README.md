@@ -1,14 +1,14 @@
-# CentralScrutinizer
+# Conion
 
 
-CentralScrutinizer is a package for general Elixir modules 
+Conion is a package for general Elixir modules 
 
-- A key/value store (`CentralScrutinizer.Store`) that handles `CentralScrutinizer.Store.Bucket`s
-  - The `CentralScrutinizer.Store.Persistor` is a `Behaviour` that implements `read!` and `write!`
+- A key/value store (`Conion.Store`) that handles `Conion.Store.Bucket`s
+  - The `Conion.Store.Persistor` is a `Behaviour` that implements `read!` and `write!`
 - Buckets are supervised
-- A central `CentralScrutinizer.Common.Configuration` module to deal with compile and runtime
+- A central `Conion.Common.Configuration` module to deal with compile and runtime
   configuration.
-- A central `CentralScrutinizer.Common.CentralLogger` module to do logging in a common manner.
+- A central `Conion.Common.CentralLogger` module to do logging in a common manner.
 
 
 ...more to come

@@ -1,14 +1,14 @@
-defmodule CentralScrutinizer.Store.Bucket do
+defmodule Conion.Store.Bucket do
   @moduledoc """
   A Bucket is a key/value store in a supervised GenServer.
-  Use `CentralScrutinizer.Store.new_bucket/1` to start a bucket.
-  The Server will use `CentralScrutinizer.Store.BucketSupervisor.start_child/1`
+  Use `Conion.Store.new_bucket/1` to start a bucket.
+  The Server will use `Conion.Store.BucketSupervisor.start_child/1`
   to do so.
   """
 
   ## CommonServer implementation
   ######################################################################
-  use CentralScrutinizer.CommonServer
+  use Conion.CommonServer
 
   def prepare_state_to_start(args) do
     %{

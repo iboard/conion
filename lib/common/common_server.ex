@@ -1,4 +1,4 @@
-defmodule CentralScrutinizer.CommonServer do
+defmodule Conion.CommonServer do
   @moduledoc """
   `use CommonServer` defines some boilerplate functions for a GenServer.
   """

@@ -17,8 +17,8 @@ config :logger,
 
 config :cs,
   application_children: [
-    {CentralScrutinizer.Store.Server, name: CentralScrutinizer.Store.Server},
-    {CentralScrutinizer.Store.BucketSupervisor, name: CentralScrutinizer.Store.BucketSupervisor}
+    {Conion.Store.Server, name: Conion.Store.Server},
+    {Conion.Store.BucketSupervisor, name: Conion.Store.BucketSupervisor}
   ]
 
 import_config "#{config_env()}.exs"

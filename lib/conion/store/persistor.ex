@@ -1,4 +1,4 @@
-defmodule CentralScrutinizer.Store.Persistor do
+defmodule Conion.Store.Persistor do
   @moduledoc """
   Persistor is a behaviour which implements the low-level read! and write! functions
   to store any kind of data to any kind of storage.

@@ -1,4 +1,4 @@
-defmodule CentralScrutinizer.MixProject do
+defmodule Conion.MixProject do
   use Mix.Project
 
   def project do
@@ -16,15 +16,15 @@ defmodule CentralScrutinizer.MixProject do
   def application do
     [
       extra_applications: [:logger, :observer, :wx],
-      mod: {CentralScrutinizer.Application, []}
+      mod: {Conion.Application, []}
     ]
   end
 
   def docs do
     [
-      name: "CentralScrutinizer",
+      name: "Conion",
       description: ~s"""
-        CentralScrutinizer is a simple, yet powerful, application to manage  
+        Conion is a simple, yet powerful, application to manage  
         your Elixir application in centralized way.
       """,
       main: "readme",

@@ -1,16 +1,16 @@
-defmodule CentralScrutinizer.Store.Server do
+defmodule Conion.Store.Server do
   @moduledoc """
-  CentralScrutinizer's Store Server (DataGateway)
+  Conion's Store Server (DataGateway)
   """
 
-  require CentralScrutinizer.Store.BucketSupervisor
+  require Conion.Store.BucketSupervisor
 
-  alias CentralScrutinizer.Store.BucketSupervisor
-  alias CentralScrutinizer.Store.Bucket
+  alias Conion.Store.BucketSupervisor
+  alias Conion.Store.Bucket
 
   ## CommonServer implementation
   ######################################################################
-  use CentralScrutinizer.CommonServer
+  use Conion.CommonServer
 
   ## Server API
   ######################################################################

@@ -2,15 +2,15 @@ defmodule CommonServerTest do
   use ExUnit.Case
 
   defmodule MyNamelessServer do
-    use CentralScrutinizer.CommonServer
+    use Conion.CommonServer
   end
 
   defmodule MyNamedServer do
-    use CentralScrutinizer.CommonServer
+    use Conion.CommonServer
   end
 
   defmodule MySpecialServer do
-    use CentralScrutinizer.CommonServer
+    use Conion.CommonServer
 
     def initial_state(_) do
       :my_special_initial_state

@@ -1,12 +1,12 @@
-defmodule CentralScrutinizer.Store do
+defmodule Conion.Store do
   @moduledoc """
-  The API for the store components `CentralScrutinizer.Store.Server`
-  and `CentralScrutinizer.Store.Bucket`.
+  The API for the store components `Conion.Store.Server`
+  and `Conion.Store.Bucket`.
 
-  Also see the `Behaviour` defined in `CentralScrutinizer.Store.Persistor`
+  Also see the `Behaviour` defined in `Conion.Store.Persistor`
   """
-  alias CentralScrutinizer.Store.Server
-  alias CentralScrutinizer.Store.Bucket
+  alias Conion.Store.Server
+  alias Conion.Store.Bucket
 
   ### Bucket functions
 

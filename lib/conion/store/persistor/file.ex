@@ -1,9 +1,9 @@
-defmodule CentralScrutinizer.Store.Persistor.File do
+defmodule Conion.Store.Persistor.File do
   @moduledoc """
   Persists and reads data to raw files.
   """
 
-  @behaviour CentralScrutinizer.Store.Persistor
+  @behaviour Conion.Store.Persistor
 
   @doc """
   Write data to filename and returns :ok on success.

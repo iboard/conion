@@ -1,13 +1,13 @@
-defmodule CentralScrutinizer.Store.BucketSupervisor do
+defmodule Conion.Store.BucketSupervisor do
   @moduledoc """
   A `DynamicSupervisor` whith `Bucket` children.
   """
 
   use DynamicSupervisor
   use Cea.Common.CentralLogger
-  alias CentralScrutinizer.Store.Bucket
+  alias Conion.Store.Bucket
 
-  @doc "Started from `CentralScrutinizer.Application`"
+  @doc "Started from `Conion.Application`"
   def start_link(_init_arg) do
     DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end

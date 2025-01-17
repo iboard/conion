@@ -1,10 +1,10 @@
-defmodule CentralScrutinizer do
+defmodule Conion do
   @moduledoc """
-  Documentation for `CentralScrutinizer`'s main API.
+  Documentation for `Conion`'s main API.
   """
   use Cea.Common.CentralLogger
 
-  alias CentralScrutinizer, as: CS
+  alias Conion, as: CS
   alias Cea.Common.{Configuration}
 
   # General Configuration
@@ -22,12 +22,12 @@ defmodule CentralScrutinizer do
   # API
 
   @doc """
-  alive? returns true if the CentralScrutinizer.Server and all it's children are running.
+  alive? returns true if the Conion.Server and all it's children are running.
   """
   def alive?(), do: all_up?()
 
   @doc """
-  Return the list of children, that should be started with the `CentralScrutinizer.Application`.
+  Return the list of children, that should be started with the `Conion.Application`.
   """
   def application_children(),
     do: Application.get_env(:cs, :application_children, [])
