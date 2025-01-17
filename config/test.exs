@@ -1,4 +1,4 @@
-# CEA Test Config
+# Conion Test Config
 #
 import Config
 

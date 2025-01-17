@@ -3,7 +3,7 @@ defmodule Conion.MixProject do
 
   def project do
     [
-      app: :cs,
+      app: :conion,
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
@@ -28,7 +28,7 @@ defmodule Conion.MixProject do
       files: ~w(lib .formatter.exs mix.exs README* LICENSE*
                 CHANGELOG*),
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/iboard/cea"}
+      links: %{"GitHub" => "https://github.com/iboard/conion"}
     ]
   end
 
@@ -48,7 +48,7 @@ defmodule Conion.MixProject do
       """,
       main: "readme",
       extras: ["README.md"],
-      source_url: "https://github.com/iboard/cea"
+      source_url: "https://github.com/iboard/conion"
     ]
   end
 

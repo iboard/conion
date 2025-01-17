@@ -1,4 +1,4 @@
-defmodule Cea.Common.CentralLogger do
+defmodule Conion.Common.CentralLogger do
   require Logger
 
   @moduledoc """
@@ -13,7 +13,7 @@ defmodule Cea.Common.CentralLogger do
 
   defmacro __using__(_) do
     quote do
-      import Cea.Common.CentralLogger, only: [log: 3, configure: 1]
+      import Conion.Common.CentralLogger, only: [log: 3, configure: 1]
     end
   end
 

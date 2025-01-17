@@ -1,9 +1,9 @@
-defmodule Cea.Common.Configuration do
+defmodule Conion.Common.Configuration do
   @moduledoc """
   General functions to deal with runtime configuration
   """
 
-  use Cea.Common.CentralLogger
+  use Conion.Common.CentralLogger
 
   @doc """
   Loads the environment ENV from `env`. If it is not

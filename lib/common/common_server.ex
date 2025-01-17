@@ -8,7 +8,7 @@ defmodule Conion.CommonServer do
   defmacro __using__(_opts \\ []) do
     quote do
       use GenServer
-      use Cea.Common.CentralLogger
+      use Conion.Common.CentralLogger
 
       @doc """
       Start the server with either

@@ -7,8 +7,7 @@ defmodule Conion.Application do
   """
 
   use Application
-  use Cea.Common.CentralLogger
-  alias Conion
+  use Conion.Common.CentralLogger
 
   @impl true
   def start(type, args) do

@@ -1,4 +1,4 @@
-# CEA Development Config
+# Conion Development Config
 #
 import Config
 

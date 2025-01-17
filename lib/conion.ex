@@ -2,10 +2,9 @@ defmodule Conion do
   @moduledoc """
   Documentation for `Conion`'s main API.
   """
-  use Cea.Common.CentralLogger
+  use Conion.Common.CentralLogger
 
-  alias Conion, as: CS
-  alias Cea.Common.{Configuration}
+  alias Conion.Common.{Configuration}
 
   # General Configuration
 
@@ -30,7 +29,7 @@ defmodule Conion do
   Return the list of children, that should be started with the `Conion.Application`.
   """
   def application_children(),
-    do: Application.get_env(:cs, :application_children, [])
+    do: Application.get_env(:conion, :application_children, [])
 
   @doc """
   Load the configuration from ENV and config.exs and call the 
@@ -44,7 +43,7 @@ defmodule Conion do
 
   # Private implementations
 
-  defp all_up?(), do: CS.application_children() |> Enum.all?(&is_up?/1)
+  defp all_up?(), do: Conion.application_children() |> Enum.all?(&is_up?/1)
 
   defp is_up?({module, _opts}) do
     not is_nil(GenServer.whereis(module))

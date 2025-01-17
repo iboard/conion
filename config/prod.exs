@@ -1,4 +1,4 @@
-# CEA Production Config
+# Conion Production Config
 #
 import Config
 

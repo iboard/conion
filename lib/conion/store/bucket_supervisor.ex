@@ -4,7 +4,7 @@ defmodule Conion.Store.BucketSupervisor do
   """
 
   use DynamicSupervisor
-  use Cea.Common.CentralLogger
+  use Conion.Common.CentralLogger
   alias Conion.Store.Bucket
 
   @doc "Started from `Conion.Application`"

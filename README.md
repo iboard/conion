@@ -1,6 +1,6 @@
 # Conion
 
-[![.github/workflows/elixir.yml](https://github.com/iboard/cea/actions/workflows/elixir.yml/badge.svg)](https://github.com/iboard/cea/actions/workflows/elixir.yml)
+[![.github/workflows/elixir.yml](https://github.com/iboard/conion/actions/workflows/elixir.yml/badge.svg)](https://github.com/iboard/conion/actions/workflows/elixir.yml)
 
 Conion is a package containing an Elixir application that provides some 
 common modules for general tasks in your Elixir application.
@@ -20,8 +20,8 @@ common modules for general tasks in your Elixir application.
 
 ## Install and prepare
 
-    git clone https://github.com/iboard/cea.git
-    cd cea
+    git clone https://github.com/iboard/conion.git
+    cd conion
     mkdir -p data/test data/dev
     mix test
     
@@ -62,7 +62,7 @@ and use it like
 ### CentralLogger
 
 ```
-  use Cea.Common.CentralLogger
+  use Conion.Common.CentralLogger
   
   def .... do 
     log(element_to_log, :warning, "Any message" )
