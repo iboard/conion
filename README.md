@@ -35,6 +35,8 @@ common modules for general tasks in your Elixir application.
 
 ```
 
+Find the package on [hex.pm](https://hex.pm/packages/conion)
+
 ## Usage Examples
 
 ### Configuration
