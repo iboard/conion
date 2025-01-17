@@ -15,4 +15,5 @@ jobs:
           otp-version: '27'
           elixir-version: '1.17'
       - run: mix deps.get
+      - run: mkdir -p data/test
       - run: mix test --include slow
