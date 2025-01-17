@@ -8,6 +8,7 @@ defmodule Conion.MixProject do
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      package: package(),
       docs: &docs/0
     ]
   end
@@ -18,6 +19,24 @@ defmodule Conion.MixProject do
       extra_applications: [:logger, :observer, :wx],
       mod: {Conion.Application, []}
     ]
+  end
+
+  defp package() do
+    [
+      name: "conion",
+      description: description(),
+      files: ~w(lib .formatter.exs mix.exs README* readme* LICENSE*
+                license* CHANGELOG* changelog*),
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "https://github.com/iboard/cea"}
+    ]
+  end
+
+  def description do
+    """
+    An Elixir application package providing general purpose modules as Configuration, 
+    Key/Value store, a common GenServer, CentralLogger, and more to come...
+    """
   end
 
   def docs do
