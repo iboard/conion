@@ -39,6 +39,9 @@ Find the package on [hex.pm](https://hex.pm/packages/conion)
 
 ## Usage Examples
 
+You can find a complete LiveView application at [Coex](https://github.com/iboard/coex) using
+Conion as the backend storage.
+
 ### Configuration
 
 Define the following function in your top module
