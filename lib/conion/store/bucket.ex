@@ -151,13 +151,13 @@ defmodule Conion.Store.Bucket do
 
   defp replace_or_error(state, bucket, id, entry) do
     (Map.has_key?(bucket, id) &&
-       {{:ok, entry}, %{state | bucket: Map.put(bucket, id, entry)}}) ||
+       {{:ok, entry}, %{state | dirty?: true, bucket: Map.put(bucket, id, entry)}}) ||
       id_not_found(id)
   end
 
   defp remove_or_error(state, bucket, id) do
     (Map.has_key?(bucket, id) &&
-       {{:ok, Map.get(bucket, id)}, %{state | bucket: Map.delete(bucket, id)}}) ||
+       {{:ok, Map.get(bucket, id)}, %{state | dirty?: true, bucket: Map.delete(bucket, id)}}) ||
       id_not_found(id)
   end
 

@@ -38,6 +38,15 @@ defmodule StoreTest do
     {:ok, ^entry2} = Store.get(:my_bucket, id2)
   end
 
+  test ".get(bucket,id)" do
+    {:ok, _pid} = Store.new_bucket(:my_bucket)
+    {:ok, {id1, entry1}} = Store.insert_new(:my_bucket, %{some: :thing})
+    {:ok, {id2, entry2}} = Store.insert_new(:my_bucket, %{some: :other_thing})
+
+    {:ok, ^entry1} = Store.get(:my_bucket, id1)
+    {:ok, ^entry2} = Store.get(:my_bucket, id2)
+  end
+
   test ".get(non_existing_bucket, id)" do
     {:ok, _pid} = Store.new_bucket(:my_bucket)
     {:ok, {id, _entry}} = Store.insert_new(:my_bucket, %{some: :thing})
