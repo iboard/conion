@@ -3,6 +3,8 @@ defmodule Conion.Store.Persistor.File do
   Persists and reads data to raw files.
   """
 
+  use Conion.Common.CentralLogger
+
   @behaviour Conion.Store.Persistor
 
   @doc """
@@ -11,7 +13,9 @@ defmodule Conion.Store.Persistor.File do
   """
   def write!(filename, data) do
     bin = :erlang.term_to_binary(data)
+
     File.write!(filename, bin)
+    |> log(:notice, "Store wrote to #{filename}")
   end
 
   @doc """
@@ -23,5 +27,6 @@ defmodule Conion.Store.Persistor.File do
       {:ok, bin} -> :erlang.binary_to_term(bin)
       _ -> %{}
     end
+    |> log(:notice, "Store read from #{filename}")
   end
 end
